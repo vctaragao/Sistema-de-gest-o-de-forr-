@@ -1,0 +1,117 @@
+[
+	{
+		"name": "id",
+		"dbType": "increments",
+		"htmlType": "",
+		"validations": "",
+		"primary": true,
+		"searchable": false,
+		"fillable": false,
+		"inForm": false,
+		"inIndex": false
+	},
+	{
+		"type": "relation",
+		"relation": "1tm,Class,classroom_id"
+	},
+	{
+		"name": "branch_id",
+		"dbType": "integer:unsigned:foreign,branches,id",
+		"htmlType": "select,Branch:id",
+		"relation": "mt1,Branch,branch_id,id",
+		"validations": "required",
+		"primary": false,
+		"searchable": true,
+		"fillable": true,
+		"inForm": true,
+		"inIndex": true
+	},
+	{
+		"name": "name",
+		"dbType": "string",
+		"htmlType": "text",
+		"validations": "required",
+		"primary": false,
+		"searchable": true,
+		"fillable": true,
+		"inForm": true,
+		"inIndex": true
+	},
+	{
+		"name": "week_day",
+		"dbType": "string",
+		"htmlType": "text",
+		"validations": "required",
+		"primary": false,
+		"searchable": true,
+		"fillable": true,
+		"inForm": true,
+		"inIndex": true
+	},
+	{
+		"name": "schedule",
+		"dbType": "string",
+		"htmlType": "text",
+		"validations": "required",
+		"primary": false,
+		"searchable": true,
+		"fillable": true,
+		"inForm": true,
+		"inIndex": true
+	},
+	{
+		"name": "size",
+		"dbType": "integer",
+		"htmlType": "text",
+		"validations": "required",
+		"primary": false,
+		"searchable": true,
+		"fillable": true,
+		"inForm": true,
+		"inIndex": true
+	},
+	{
+		"name": "isActive",
+		"dbType": "boolean",
+		"htmlType": "checkbox",
+		"validations": "required",
+		"primary": false,
+		"searchable": true,
+		"fillable": true,
+		"inForm": true,
+		"inIndex": true
+	},
+	{
+		"name": "isOpen",
+		"dbType": "boolean",
+		"htmlType": "checkbox",
+		"validations": "required",
+		"primary": false,
+		"searchable": true,
+		"fillable": true,
+		"inForm": true,
+		"inIndex": true
+	},
+	{
+		"name": "created_at",
+		"dbType": "timestamp",
+		"htmlType": "",
+		"validations": "",
+		"primary": false,
+		"searchable": false,
+		"fillable": false,
+		"inForm": false,
+		"inIndex": false
+	},
+	{
+		"name": "updated_at",
+		"dbType": "timestamp",
+		"htmlType": "",
+		"validations": "",
+		"primary": false,
+		"searchable": false,
+		"fillable": false,
+		"inForm": false,
+		"inIndex": false
+	}
+]
