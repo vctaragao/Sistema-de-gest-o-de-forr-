@@ -1,0 +1,49 @@
+image: "registry.gitlab.com/vct.aragao/sistema-de-gestao-forro"
+
+services:
+  - mysql:5.7
+
+variables:
+  MYSQL_DATABASE: app
+  MYSQL_ROOT_PASSWORD: G6N/*u795*a
+  MYSQL_USER: appuser
+  MYSQL_PASSWORD: 4U//*7264aht*
+  DB_HOST: mysql
+  DB_DATABASE: app
+  DB_USERNAME: appuser
+  DB_PASSWORD: 4U//*7264aht*
+
+
+stages:
+  - test
+  - deploy
+
+job1:
+  stage: test
+  script:
+    - cp .env.example .env
+    - composer install
+    - php artisan key:generate
+    - php artisan migrate
+    - vendor/bin/phpunit
+
+job2:
+  stage: deploy
+  script:
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - ssh-add <(echo "$SSH_PRIVATE_KEY")
+    - mkdir -p ~/.ssh
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    - ~/.composer/vendor/bin/envoy run deploy --commit="$CI_COMMIT_SHA"
+  environment:
+    name: production
+    url: http://206.189.216.247
+  when: manual
+  only:
+    - master
+
+    # Fazendo o deploy da aplicação sem o Envoy" #
+
+    #- ssh -tt deployer@206.189.216.247 '[[ -d ~/ci_cd-laravel ]] && (echo "Diretorio encontrado, realizando o pull" && cd ~/ci_cd-laravel && git pull git@gitlab.com:vct.aragao/ci_cd-laravel.git) || (echo "Diretorio não encontrado, clonando..." && git clone git@gitlab.com:vct.aragao/ci_cd-laravel.git)'#
+  
