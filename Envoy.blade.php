@@ -45,7 +45,6 @@ mkdir {{ $app_dir }}/storage
 mkdir {{ $app_dir }}/storage/framework
 mkdir {{ $app_dir }}/storage/framework/cache
 mkdir {{ $app_dir }}/storage/framework/sessions
-mkdir {{ $app_dir }}/storage/framework/cache
 mkdir {{ $app_dir }}/storage/framework/views
 
 elif ! [ -d {{ $app_dir}}/storage/framework ]
@@ -53,7 +52,6 @@ then
 mkdir {{ $app_dir }}/storage/framework
 mkdir {{ $app_dir }}/storage/framework/cache
 mkdir {{ $app_dir }}/storage/framework/sessions
-mkdir {{ $app_dir }}/storage/framework/cache
 mkdir {{ $app_dir }}/storage/framework/views
 
 elif ! [ -d {{ $app_dir }}/storage/framework/cache ]
