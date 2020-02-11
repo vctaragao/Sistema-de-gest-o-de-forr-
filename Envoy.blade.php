@@ -12,9 +12,9 @@ $new_release_dir = $releases_dir .'/'. $release;
 setup_app_dir
 clone_repository
 run_composer
+create_links
 create_env
 create_storage
-create_links
 generte_keys
 @endstory
 
