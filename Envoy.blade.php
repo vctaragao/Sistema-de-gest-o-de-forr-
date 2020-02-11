@@ -37,7 +37,7 @@ composer install --prefer-dist --no-scripts -q -o
 
 @task('create_env')
 echo "Creating .env file"
-[ -f {{ $new_release_dir }}/.env ] || touch {{ $app_dir }}/.env
+[ -f {{ $app_dir }}/.env ] || touch {{ $app_dir }}/.env
 @endtask
 
 @task('create_links')
