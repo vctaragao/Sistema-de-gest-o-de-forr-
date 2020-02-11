@@ -35,7 +35,7 @@ cd {{ $new_release_dir }}
 composer install --prefer-dist --no-scripts -q -o
 @endtask
 
-@task('create_storage_and_env');
+@task('create_storage_and_env')
 echo "Creating storage folder and It's sub folders"
 [ -d {{ $new_release_dir }}/storage ] && (rm -rf {{ $new_release_dir }}/storage && mkdir {{ $new_release_dir }}/storage)
 || mkdir {{ $new_release_dir }}/storage
