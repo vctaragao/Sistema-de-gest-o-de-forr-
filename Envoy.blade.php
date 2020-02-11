@@ -75,6 +75,7 @@ echo "Creating .env file"
 
 @task('create_links')
 echo "Linking storage directory"
+rm -rf {{ $new_release_dir }}/storage
 ln -nfs {{ $app_dir }}/storage {{ $new_release_dir }}/storage
 
 echo 'Linking .env file'

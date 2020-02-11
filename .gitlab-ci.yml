@@ -34,9 +34,8 @@ job2:
     - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
     - ~/.composer/vendor/bin/envoy run deploy --commit="$CI_COMMIT_SHA"
   environment:
-    name: production
-    url: http://206.189.216.247
-  when: manual
+    name: staging
+    url: http://206.189.216.247:8080
   only:
     - master
 
