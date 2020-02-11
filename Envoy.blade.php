@@ -35,6 +35,40 @@ cd {{ $new_release_dir }}
 composer install --prefer-dist --no-scripts -q -o
 @endtask
 
+@task('create_storage')
+if [ -d {{ $app_dir }}/storage ]
+then
+if [ -d {{ $app_dir }}/storage/framework]
+then
+if ! [ -d {{ $app_dir }}/storage/framework/cache]
+then
+mkdir {{ $app_dir }}/storage/framework/cache
+fi
+if ! [ -d {{ $app_dir }}/storage/framework/sessions]
+then
+mkdir {{ $app_dir }}/storage/framework/sessions
+fi
+if ! [ -d {{ $app_dir }}/storage/framework/sessions]
+then
+mkdir {{ $app_dir }}/storage/framework/views
+fi
+else
+mkdir {{ $app_dir }}/storage/framework
+mkdir {{ $app_dir }}/storage/framework/cache
+mkdir {{ $app_dir }}/storage/framework/sessions
+mkdir {{ $app_dir }}/storage/framework/cache
+mkdir {{ $app_dir }}/storage/framework/views
+fi
+else
+mkdir {{ $app_dir }}/storage
+mkdir {{ $app_dir }}/storage/framework
+mkdir {{ $app_dir }}/storage/framework/cache
+mkdir {{ $app_dir }}/storage/framework/sessions
+mkdir {{ $app_dir }}/storage/framework/cache
+mkdir {{ $app_dir }}/storage/framework/views
+fi
+@endtask
+
 @task('create_env')
 echo "Creating .env file"
 [ -f {{ $app_dir }}/.env ] || touch {{ $app_dir }}/.env
@@ -42,14 +76,7 @@ echo "Creating .env file"
 
 @task('create_links')
 echo "Linking storage directory"
-rm -rf {{ $new_release_dir }}/storage
 ln -nfs {{ $app_dir }}/storage {{ $new_release_dir }}/storage
-[ -d {{ $app_dir }}/storage ] || mkdir {{ $app_dir }}/storage
-[ -d {{ $app_dir }}/storage ] && mkdir {{ $app_dir }}/storage/framework
-[ -d {{ $app_dir }}/storage/framework ] && mkdir {{ $app_dir }}/storage/framework/cache
-[ -d {{ $app_dir }}/storage/framework ] && mkdir {{ $app_dir }}/storage/framework/sessions
-[ -d {{ $app_dir }}/storage/framework ] && mkdir {{ $app_dir }}/storage/framework/cache
-[ -d {{ $app_dir }}/storage/framework ] && mkdir {{ $app_dir }}/storage/framework/views
 
 echo 'Linking .env file'
 ln -nfs {{ $app_dir }}/.env {{ $new_release_dir }}/.env
