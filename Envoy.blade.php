@@ -12,6 +12,7 @@ $new_release_dir = $releases_dir .'/'. $release;
 setup_app_dir
 clone_repository
 run_composer
+generte_keys
 create_storage
 create_env
 create_links
@@ -34,6 +35,11 @@ git reset --hard {{ $commit }}
 echo "Starting deployment ({{ $release }})"
 cd {{ $new_release_dir }}
 composer install --prefer-dist --no-scripts -q -o
+@endtask
+
+@task('generte_keys')
+cd {{ $new_release_dir }}
+php artisan key:generate
 @endtask
 
 @task('create_storage')
@@ -72,7 +78,7 @@ fi
 
 @task('create_env')
 echo "Creating .env file"
-[ -f {{ $app_dir }}/.env ] || cp {{ $new_release_dir }}/.env-example {{ $app_dir }}/.env
+[ -f {{ $app_dir }}/.env ] || cp {{ $new_release_dir }}/.env.example {{ $app_dir }}/.env
 @endtask
 
 @task('create_links')
