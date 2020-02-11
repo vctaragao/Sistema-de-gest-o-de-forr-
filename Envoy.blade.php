@@ -39,17 +39,17 @@ composer install --prefer-dist --no-scripts -q -o
 @task('create_storage')
 if [ -d {{ $app_dir }}/storage ]
 then
-if [ -d {{ $app_dir }}/storage/framework]
+if [ -d {{ $app_dir }}/storage/framework ]
 then
-if ! [ -d {{ $app_dir }}/storage/framework/cache]
+if ! [ -d {{ $app_dir }}/storage/framework/cache ]
 then
 mkdir {{ $app_dir }}/storage/framework/cache
 fi
-if ! [ -d {{ $app_dir }}/storage/framework/sessions]
+if ! [ -d {{ $app_dir }}/storage/framework/sessions ]
 then
 mkdir {{ $app_dir }}/storage/framework/sessions
 fi
-if ! [ -d {{ $app_dir }}/storage/framework/sessions]
+if ! [ -d {{ $app_dir }}/storage/framework/sessions ]
 then
 mkdir {{ $app_dir }}/storage/framework/views
 fi
@@ -72,7 +72,7 @@ fi
 
 @task('create_env')
 echo "Creating .env file"
-[ -f {{ $app_dir }}/.env ] || touch {{ $app_dir }}/.env
+[ -f {{ $app_dir }}/.env ] || cp {{ $new_release_dir }}/.env-example {{ $app_dir }}/.env
 @endtask
 
 @task('create_links')
