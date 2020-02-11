@@ -37,36 +37,36 @@ composer install --prefer-dist --no-scripts -q -o
 @endtask
 
 @task('create_storage')
-if [ -d {{ $app_dir }}/storage ]
+echo "Creating storage and sub folders"
+if ! [ -d {{$app_dir }}/storage ]
 then
-if [ -d {{ $app_dir }}/storage/framework ]
-then
-if ! [ -d {{ $app_dir }}/storage/framework/cache ]
-then
-mkdir {{ $app_dir }}/storage/framework/cache
-fi
-if ! [ -d {{ $app_dir }}/storage/framework/sessions ]
-then
-mkdir {{ $app_dir }}/storage/framework/sessions
-fi
-if ! [ -d {{ $app_dir }}/storage/framework/sessions ]
-then
-mkdir {{ $app_dir }}/storage/framework/views
-fi
-else
-mkdir {{ $app_dir }}/storage/framework
-mkdir {{ $app_dir }}/storage/framework/cache
-mkdir {{ $app_dir }}/storage/framework/sessions
-mkdir {{ $app_dir }}/storage/framework/cache
-mkdir {{ $app_dir }}/storage/framework/views
-fi
-else
 mkdir {{ $app_dir }}/storage
 mkdir {{ $app_dir }}/storage/framework
 mkdir {{ $app_dir }}/storage/framework/cache
 mkdir {{ $app_dir }}/storage/framework/sessions
 mkdir {{ $app_dir }}/storage/framework/cache
 mkdir {{ $app_dir }}/storage/framework/views
+
+elif ! [ -d {{ $app_dir}}/storage/framework ]
+then
+mkdir {{ $app_dir }}/storage/framework
+mkdir {{ $app_dir }}/storage/framework/cache
+mkdir {{ $app_dir }}/storage/framework/sessions
+mkdir {{ $app_dir }}/storage/framework/cache
+mkdir {{ $app_dir }}/storage/framework/views
+
+elif ! [ -d {{ $app_dir }}/storage/framework/cache ]
+then
+mkdir {{ $app_dir }}/storage/framework/cache
+
+elif ! [ -d {{ $app_dir }}/storage/framework/sessions ]
+then
+mkdir {{ $app_dir }}/storage/framework/sessions
+
+elif ! [ -d {{ $app_dir }}/storage/framework/views ]
+then
+mkdir {{ $app_dir }}/storage/framework/views
+
 fi
 @endtask
 

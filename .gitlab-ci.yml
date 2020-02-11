@@ -1,25 +1,22 @@
 image: "registry.gitlab.com/vct.aragao/sistema-de-gestao-forro"
 
-services:
-  - mysql:5.7
-
-variables:
-  MYSQL_DATABASE: app
-  MYSQL_ROOT_PASSWORD: G6N/*u795*a
-  MYSQL_USER: appuser
-  MYSQL_PASSWORD: 4U//*7264aht*
-  DB_HOST: mysql
-  DB_DATABASE: app
-  DB_USERNAME: appuser
-  DB_PASSWORD: 4U//*7264aht*
-
-
 stages:
   - test
   - deploy
 
 job1:
   stage: test
+  services:
+    - mysql:5.7
+  variables:
+    MYSQL_DATABASE: app
+    MYSQL_ROOT_PASSWORD: G6N/*u795*a
+    MYSQL_USER: appuser
+    MYSQL_PASSWORD: 4U//*7264aht*
+    DB_HOST: mysql
+    DB_DATABASE: app
+    DB_USERNAME: appuser
+    DB_PASSWORD: 4U//*7264aht*
   script:
     - cp .env.example .env
     - composer install
