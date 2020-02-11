@@ -47,6 +47,8 @@ echo "Creating .env file"
 [ -f {{ $new_release_dir }}/.env ] && (rm {{ $new_release_dir }}/.env && touch {{ $new_release_dir }}/.env) || touch
 {{ $new_release_dir }}/.env
 
+@endtask
+
 @task('create_links')
 echo "Linking storage directory"
 rm -rf {{ $new_release_dir }}/storage
