@@ -82,8 +82,9 @@ fi
 @endtask
 
 @task('migrate_database')
-if [-d {{ $app_dir }}/.env ]
+if [ -d {{ $app_dir }}/.env ]
 then
+echo "Migrating the database"
 php artisan migrate:fresh --seed
 else
 echo ".env not yet configured"
