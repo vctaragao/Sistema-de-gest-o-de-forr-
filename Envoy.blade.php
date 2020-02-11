@@ -44,9 +44,11 @@ echo "Creating .env file"
 echo "Linking storage directory"
 rm -rf {{ $new_release_dir }}/storage
 ln -nfs {{ $app_dir }}/storage {{ $new_release_dir }}/storage
-mkdir {{ $new_relase_dir }}/storage/frameworks/cache
-mkdir {{ $new_relase_dir }}/storage/frameworks/sessions
-mkdir {{ $new_relase_dir }}/storage/frameworks/views
+[ -d {{ $new_release_dir }}/storage ] || mkdir {{ $new_release_dir }}/storage
+[ -d {{ $new_release_dir }}/storage ] && mkdir {{ $new_relase_dir }}/storage/frameworks/cache
+[ -d {{ $new_release_dir }}/storage ] && mkdir {{ $new_relase_dir }}/storage/frameworks/sessions
+[ -d {{ $new_release_dir }}/storage ] && mkdir {{ $new_relase_dir }}/storage/frameworks/cache
+[ -d {{ $new_release_dir }}/storage ] && mkdir {{ $new_relase_dir }}/storage/frameworks/views
 
 echo 'Linking .env file'
 ln -nfs {{ $app_dir }}/.env {{ $new_release_dir }}/.env
