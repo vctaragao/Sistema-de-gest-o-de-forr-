@@ -14,7 +14,6 @@ clone_repository
 run_composer
 create_links
 create_env
-create_storage
 generte_keys
 @endstory
 
