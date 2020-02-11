@@ -85,6 +85,7 @@ fi
 if [ -f {{ $app_dir }}/.env ]
 then
 echo "Migrating the database"
+cd {{ $new_release_dir }}
 php artisan migrate:fresh --seed
 else
 echo ".env not yet configured"
