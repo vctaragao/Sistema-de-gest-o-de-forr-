@@ -13,8 +13,9 @@ setup_app_dir
 clone_repository
 run_composer
 create_links
+migrate_database
 create_env
-generte_keys
+generete_keys
 @endstory
 
 @task('setup_app_dir')
@@ -34,6 +35,18 @@ git reset --hard {{ $commit }}
 echo "Starting deployment ({{ $release }})"
 cd {{ $new_release_dir }}
 composer install --prefer-dist --no-scripts -q -o
+@endtask
+
+@task('create_links')
+echo "Linking storage directory"
+rm -rf {{ $new_release_dir }}/storage
+ln -nfs {{ $app_dir }}/storage {{ $new_release_dir }}/storage
+
+echo 'Linking .env file'
+ln -nfs {{ $app_dir }}/.env {{ $new_release_dir }}/.env
+
+echo 'Linking current release'
+ln -nfs {{ $new_release_dir }} {{ $app_dir }}/current
 @endtask
 
 @task('create_storage')
@@ -68,24 +81,21 @@ mkdir {{ $app_dir }}/storage/framework/views
 fi
 @endtask
 
+@task('migrate_database')
+if [-d {{ $app_dir }}/.env ]
+then
+php artisan migrate:fresh --seed
+else
+echo ".env not yet configured"
+fi
+@endtask
+
 @task('create_env')
 echo "Creating .env file"
 [ -f {{ $app_dir }}/.env ] || cp {{ $new_release_dir }}/.env.example {{ $app_dir }}/.env
 @endtask
 
-@task('create_links')
-echo "Linking storage directory"
-rm -rf {{ $new_release_dir }}/storage
-ln -nfs {{ $app_dir }}/storage {{ $new_release_dir }}/storage
-
-echo 'Linking .env file'
-ln -nfs {{ $app_dir }}/.env {{ $new_release_dir }}/.env
-
-echo 'Linking current release'
-ln -nfs {{ $new_release_dir }} {{ $app_dir }}/current
-@endtask
-
-@task('generte_keys')
+@task('generete_keys')
 echo "Generating APP KEY"
 cd {{ $new_release_dir }}
 php artisan key:generate
