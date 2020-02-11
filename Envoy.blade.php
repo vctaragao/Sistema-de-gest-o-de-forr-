@@ -37,18 +37,19 @@ composer install --prefer-dist --no-scripts -q -o
 
 @task('create_env')
 echo "Creating .env file"
-[ -f {{ $new_release_dir }}/.env ] || touch {{ $new_release_dir }}/.env
+[ -f {{ $new_release_dir }}/.env ] || touch {{ $app_dir }}/.env
 @endtask
 
 @task('create_links')
 echo "Linking storage directory"
 rm -rf {{ $new_release_dir }}/storage
 ln -nfs {{ $app_dir }}/storage {{ $new_release_dir }}/storage
-[ -d {{ $new_release_dir }}/storage ] || mkdir {{ $new_release_dir }}/storage
-[ -d {{ $new_release_dir }}/storage ] && mkdir {{ $new_relase_dir }}/storage/frameworks/cache
-[ -d {{ $new_release_dir }}/storage ] && mkdir {{ $new_relase_dir }}/storage/frameworks/sessions
-[ -d {{ $new_release_dir }}/storage ] && mkdir {{ $new_relase_dir }}/storage/frameworks/cache
-[ -d {{ $new_release_dir }}/storage ] && mkdir {{ $new_relase_dir }}/storage/frameworks/views
+[ -d {{ $app_dir }}/storage ] || mkdir {{ $app_dir }}/storage
+[ -d {{ $app_dir }}/storage ] && mkdir {{ $app_dir }}/storage/framework
+[ -d {{ $app_dir }}/storage/framework ] && mkdir {{ $app_dir }}/storage/framework/cache
+[ -d {{ $app_dir }}/storage/framework ] && mkdir {{ $app_dir }}/storage/framework/sessions
+[ -d {{ $app_dir }}/storage/framework ] && mkdir {{ $app_dir }}/storage/framework/cache
+[ -d {{ $app_dir }}/storage/framework ] && mkdir {{ $app_dir }}/storage/framework/views
 
 echo 'Linking .env file'
 ln -nfs {{ $app_dir }}/.env {{ $new_release_dir }}/.env
