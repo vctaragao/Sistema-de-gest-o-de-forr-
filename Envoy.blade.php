@@ -12,7 +12,7 @@ $new_release_dir = $releases_dir .'/'. $release;
 setup_app_dir
 clone_repository
 run_composer
-create_storage_and_env
+create_env
 create_links
 @endstory
 
@@ -35,24 +35,18 @@ cd {{ $new_release_dir }}
 composer install --prefer-dist --no-scripts -q -o
 @endtask
 
-@task('create_storage_and_env')
-echo "Creating storage folder and It's sub folders"
-[ -d {{ $new_release_dir }}/storage ] && (rm -rf {{ $new_release_dir }}/storage && mkdir {{ $new_release_dir }}/storage)
-|| mkdir {{ $new_release_dir }}/storage
-mkdir {{ $new_relase_dir }}/storage/frameworks/cache
-mkdir {{ $new_relase_dir }}/storage/frameworks/sessions
-mkdir {{ $new_relase_dir }}/storage/frameworks/views
-
+@task('create_env')
 echo "Creating .env file"
-[ -f {{ $new_release_dir }}/.env ] && (rm {{ $new_release_dir }}/.env && touch {{ $new_release_dir }}/.env) || touch
-{{ $new_release_dir }}/.env
-
+[ -f {{ $new_release_dir }}/.env ] || touch {{ $new_release_dir }}/.env
 @endtask
 
 @task('create_links')
 echo "Linking storage directory"
 rm -rf {{ $new_release_dir }}/storage
 ln -nfs {{ $app_dir }}/storage {{ $new_release_dir }}/storage
+mkdir {{ $new_relase_dir }}/storage/frameworks/cache
+mkdir {{ $new_relase_dir }}/storage/frameworks/sessions
+mkdir {{ $new_relase_dir }}/storage/frameworks/views
 
 echo 'Linking .env file'
 ln -nfs {{ $app_dir }}/.env {{ $new_release_dir }}/.env
