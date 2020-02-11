@@ -12,9 +12,9 @@ $new_release_dir = $releases_dir .'/'. $release;
 setup_app_dir
 clone_repository
 run_composer
+create_env
 generte_keys
 create_storage
-create_env
 create_links
 @endstory
 
@@ -37,7 +37,13 @@ cd {{ $new_release_dir }}
 composer install --prefer-dist --no-scripts -q -o
 @endtask
 
+@task('create_env')
+echo "Creating .env file"
+[ -f {{ $app_dir }}/.env ] || cp {{ $new_release_dir }}/.env.example {{ $app_dir }}/.env
+@endtask
+
 @task('generte_keys')
+echo "Generating APP KEY"
 cd {{ $new_release_dir }}
 php artisan key:generate
 @endtask
@@ -74,11 +80,6 @@ then
 mkdir {{ $app_dir }}/storage/framework/views
 
 fi
-@endtask
-
-@task('create_env')
-echo "Creating .env file"
-[ -f {{ $app_dir }}/.env ] || cp {{ $new_release_dir }}/.env.example {{ $app_dir }}/.env
 @endtask
 
 @task('create_links')
